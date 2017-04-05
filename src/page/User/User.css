@@ -1,0 +1,31 @@
+.login-form-button {
+    width: 100%;
+}
+
+#login {
+    padding: 10px;
+}
+
+#user_index {
+    position: relative;
+    top: 10px;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 15px;
+    dl {
+        dt {
+            display: flex;
+            align-items: center;
+        }
+        label {
+            padding-left: 10px;
+            display: block;
+            flex: 1;
+        }
+    }
+}
+
+
+/*.ant-btn-lg {
+    width: 100%;
+}*/

@@ -1,0 +1,17 @@
+$bg:#f6f6f6;
+body {
+    background-color: $bg;
+    margin: 0;
+}
+
+dl {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    dd {
+        -webkit-margin-start: 0;
+    }
+}
+
+#body {
+    margin-top: 44px;
+}

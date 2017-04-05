@@ -1,0 +1,30 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    font-size: 22px;
+    line-height: 2;
+    z-index: 999;
+    border-bottom: 1px solid #ccc;
+    i {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        &.anticon-menu-fold {
+            left: auto;
+            right: 10px;
+        }
+    }
+    span {
+        white-space: normal;
+        flex: 0 0 80%;
+        flex-basis: 72%;
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+    }
+}
