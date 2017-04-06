@@ -9,7 +9,7 @@
     "run": "nodemon main",
     "pro": "nodemon main&webpack --watch --progress --config webpack.pro.js",
     "build":"webpack --progress --config webpack.pro.js",
-    "forever": " webpack --progress --config webpack.pro.js&&forever start main.js"
+    "forever": " webpack --progress --config webpack.pro.js&&forever restart main.js"
   },
   "dependencies": {
     "babel-plugin-import": "^1.1.1",

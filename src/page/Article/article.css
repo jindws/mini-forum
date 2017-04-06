@@ -10,6 +10,8 @@
     p {
         display: flex;
         padding: 10px;
+        /*border-bottom: 1px solid #ccc;*/
+        background-color: #f6f6f6;
         span {
             flex: 1;
         }
@@ -17,14 +19,32 @@
             text-align: right;
         }
     }
-    div {
-        padding: 10px;
-    }
     textarea {
         resize: none;
+    }
+    [disabled] {
         background-color: transparent;
         color: #000;
         border: 0;
+    }
+    .ant-tabs-nav {
+        display: flex;
+        width: 100%;
+        border-top: 1px solid #ccc;
+        margin-top: 50px;
+        .ant-tabs-tab {
+            flex: 1;
+            margin-right: 0;
+            text-align: center;
+        }
+    }
+    dl {
+        dd {
+            padding: 10px;
+        }
+        >:nth-child(odd) {
+            background-color: #eee;
+        }
     }
 }
 

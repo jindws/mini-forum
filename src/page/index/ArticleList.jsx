@@ -18,7 +18,7 @@ export default class ArticleList extends Component {
                     </div>
                 </dd>
             })
-}
+          }
         </dl>
     }
 }

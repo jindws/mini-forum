@@ -91,7 +91,6 @@ exports.checkuser = request => checkusers(request);
 exports.regist = request => {
     return new Promise((resolve, reject) => {
         checkusers({username: request.username}).then(() => {
-            // reject();
             UserModel.create(request, (error, docs) => {
                 if (!error) {
                     resolve()
@@ -134,6 +133,8 @@ function findUserByKey(key) {
     })
 }
 
+exports.findUserByKey = findUserByKey;
+
 exports.myuser = request => {
     const {findArticleByUserId_Count} =require('./article');
     return new Promise((resolve,reject)=>[
@@ -166,6 +167,24 @@ exports.changeNicheng = request => {
         })
     })
 }
+
+function findUserById(id){
+  return new Promise((resolve,reject)=>[
+      UserModel.findById(id,{
+        _id:0,
+        username:1,
+        nicheng:1,
+      },(error,docs)=>{
+          if(docs){
+            resolve(docs)
+          }else{
+            reject();
+          }
+      })
+  ])
+}
+
+exports.findUserById = findUserById;
 
 /**
  * 注销

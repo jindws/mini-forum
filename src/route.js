@@ -169,7 +169,7 @@ user.post('/myArticles', async ctx => {
     await myArticles(request).then(data => {
         ctx.body = {
             status: 0,
-            list:data
+            list: data
         }
     }, () => {
         ctx.body = {
@@ -179,8 +179,63 @@ user.post('/myArticles', async ctx => {
     })
 })
 
+//pinglun
+
+const rpinglun = new Router;
+const {savePinglun} = require('./mongo/PingLun');
+const {findUserByKey, findUserById} = require('./mongo/user');
+rpinglun.post('/add', async ctx => {
+    const request = JSON.parse(Object.keys(ctx.request.body));
+    await findUserByKey(request.key).then(async data => {
+        await savePinglun(Object.assign(request, {userId: data._id})).then(() => {
+            ctx.body = {
+                status: 0,
+                message: "success"
+            }
+        }, () => {
+            ctx.body = {
+                status: -1,
+                message: '操作失败'
+            }
+        })
+    })
+})
+
+function mergeUserAndPL(data) {
+    return new Promise((resolve, reject) => {
+        let datas = [];
+        data.forEach(async dt => {
+            await findUserById(dt.userId).then(async re => {
+                await datas.push(Object.assign({}, JSON.parse(JSON.stringify(dt)), JSON.parse(JSON.stringify(re)),{userId:null}));
+                if (datas.length === data.length) {
+                    resolve(datas);
+                }
+            })
+        })
+    })
+}
+
+rpinglun.post('/getpinglun', async ctx => {
+    const {getPinglun} = require('./mongo/PingLun');
+    const request = JSON.parse(Object.keys(ctx.request.body));
+    await getPinglun(request.articleId).then(async data => {
+        await mergeUserAndPL(data).then(list => {
+            ctx.body = {
+                status: 0,
+                list
+            }
+        })
+    }, () => {
+        ctx.body = {
+            status: -1,
+            error: '没有得到评论数据'
+        }
+    })
+})
+
 router.use('/', article.routes());
 router.use('/user', user.routes());
+router.use('/pinglun', rpinglun.routes());
 
 // module.exports = () => router.routes();
 exports.route = router.routes();
