@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
 import {req} from '../../app/fetch'
-import {Button, Modal, Input} from 'antd'
+import {Button, Modal, Input,Icon} from 'antd'
 
 class Index extends Component {
     constructor() {
@@ -59,11 +59,7 @@ class Index extends Component {
         return <section id='user_index'>
             <dl>
                 <dt>欢迎用户:{user.nicheng || user.username}
-                    <label style={{
-                            visibility: (zhuceDay
-                            ? ''
-                            : 'hidden')
-                    }}>您已注册{zhuceDay}天</label>
+                    <label>您已注册{zhuceDay+1}天</label>
                   <Button style={{display:(user.nicheng?'none':'')}} type="dashed" onClick={this.showModal.bind(this)}>添加昵称</Button>
                     <Modal title="您仅有一次修改的机会" visible={this.state.visible} onOk={this.handleOk.bind(this)} confirmLoading={this.state.confirmLoading} onCancel={this.handleCancel.bind(this)}>
                         <p>{this.state.ModalText}</p>
@@ -72,9 +68,11 @@ class Index extends Component {
                         }} placeholder='昵称'/>
                     </Modal>
                 </dt>
-                <dd></dd>
+                <dd className='myarticle' onClick={()=>location.hash = 'user/myarticle'}>
+                  <Icon type="book" />我的文章
+                  <label>{user.articleNum}</label>
+                </dd>
             </dl>
-            <a href="javascript:;"></a>
             <div></div>
         </section>
     }

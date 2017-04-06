@@ -116,12 +116,11 @@ exports.regist = request => {
  * 个人信息
  */
 
-exports.myuser = request => {
+function findUserByKey(key) {
     return new Promise((resolve, reject) => {
         UserModel.findOne({
-            key: request.key
+            key
         }, {
-            _id: 0,
             nicheng: 1,
             username: 1,
             createDate: 1
@@ -133,6 +132,18 @@ exports.myuser = request => {
             }
         })
     })
+}
+
+exports.myuser = request => {
+    const {findArticleByUserId_Count} =require('./article');
+    return new Promise((resolve,reject)=>[
+        findUserByKey(request.key).then(data=>{
+            findArticleByUserId_Count(data._id).then(articleNum=>{
+              resolve(Object.assign({},JSON.parse(JSON.stringify(data)),{articleNum}))
+            })
+        })
+    ])
+
 }
 
 exports.changeNicheng = request => {
@@ -168,6 +179,21 @@ exports.logout = request => {
             key: md5(Date.now())
         }).then(() => {
             resolve();
+        })
+    })
+}
+
+// const {}
+/**
+ * 我的文章
+ */
+exports.myArticles = request => {
+    const {findArticlesByUserId} =require('./article');
+    return new Promise((resolve, reject) => {
+        findUserByKey(request.key).then(data => {
+            findArticlesByUserId(data._id).then(re=>{
+                resolve(re);
+            },()=>reject());
         })
     })
 }

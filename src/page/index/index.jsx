@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
 import {Spin, Icon, Pagination} from 'antd'
 import {req} from '../../app/fetch'
-
+import ArticleList from './ArticleList.jsx'
 import './index.css'
 class Index extends Component {
     constructor(props) {
@@ -33,7 +33,9 @@ class Index extends Component {
 
     changeCurrent(current) {
         location.hash = current;
-        this.setState({current},()=>this.getList());
+        this.setState({
+            current
+        }, () => this.getList());
     }
 
     render() {
@@ -45,20 +47,7 @@ class Index extends Component {
             return <section className='spin'><Icon type="loading"/>暂无内容</section>
         }
         return <section id='list'>
-            <dl>
-                {data.list.map((it, index) => {
-                    return <dd key={`article_${index}`} onClick={() => location.hash = `article/${it._id}`}>
-                        <p>{it.title}</p>
-                        <div>
-                            <time>{(new Date(it.createTime)).toLocaleString()}</time>
-                            <label>{it.user}</label>
-                            <Icon type="eye-o"/>{it.see}
-                            <Icon type="message"/>2
-                        </div>
-                    </dd>
-                })
-}
-            </dl>
+            <ArticleList list={data.list}/>
             <Pagination simple current={this.state.current} onChange={this.changeCurrent.bind(this)} total={this.state.data.count} pageSize={10}/>
         </section>
     }

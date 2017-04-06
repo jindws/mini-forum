@@ -5,30 +5,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
         apps: './src/app/app.jsx',
-        common: [ // "babel-polyfill",
-            // "react-dom",
-            // "react-redux",
-            // "redux",
-            // "react-motion",
-            // "react-router-dom",
-            // "dateformat",
-            // "sweetalert2",
-            // "react-router-transition",
-            // "es6-promise",
-            // "./node_modules/sweetalert2/dist/sweetalert2.css",
+        common: [
             "jquery",
-            // "whatwg-fetch",
             "react",
             "normalize.css",
             "animate.css",
         ]
     },
-
-    // output: {
-    //     path: path.resolve(__dirname, './dist'),
-    //     filename: 'app.js',
-    //     publicPath: '/',
-    // },
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].js', //最终打包生产的文件名
@@ -49,7 +32,6 @@ module.exports = {
                 loader: 'babel-loader'
             }, {
                 test: /\.(css)$/,
-                // loader: "style-loader!css-loader!postcss-loader!sass-loader"
                 loader: "style-loader!css-loader!postcss-loader"
             }, {
                 test: /\.less$/,

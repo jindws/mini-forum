@@ -28,6 +28,9 @@ const ArticleSchema = new mongoose.Schema({
     see: {
         type: Number,
         default: 0
+    },
+    userId: {
+        type: String
     }
 })
 
@@ -37,7 +40,6 @@ function findById(request) { //进入文章页面
     return new Promise((resolve, reject) => {
         ArticleModel.findById(request.id, (error, docs) => {
             if (docs) {
-              console.log(request.id,docs.see)
                 addSee(request.id, docs.see + 1)
                 resolve(docs)
             } else {
@@ -48,16 +50,16 @@ function findById(request) { //进入文章页面
 }
 
 function addSee(id, see) { //文章浏览次数添加
-    ArticleModel.findByIdAndUpdate(id, {see},(error,doc)=>{
-      // console.log(see,doc)
+    ArticleModel.findByIdAndUpdate(id, {
+        see
+    }, (error, doc) => {
+        // console.log(see,doc)
     })
 }
 
 function findArticles(current) { //index
     return new Promise(async(resolve, reject) => {
-        const count = await ArticleModel.count({}, (error, docs) => {
-            return docs;
-        })
+        const count = await ArticleModel.count({}, (error, docs) => docs);
 
         const query = ArticleModel.find({}, {
             title: 1,
@@ -74,6 +76,30 @@ function findArticles(current) { //index
     })
 }
 
+exports.findArticleByUserId_Count = userId => {
+    return new Promise(resolve => {
+        ArticleModel.count({userId}).then(count=> {resolve(count)})
+    })
+}
+
+exports.findArticlesByUserId = userId => {
+    return new Promise((resolve, reject) => {
+        ArticleModel.find({
+            userId
+        }, {
+            title: 1,
+            see: 1,
+            createTime: 1
+        }, (error, docs) => {
+            if (docs) {
+                resolve(docs)
+            } else {
+                reject();
+            }
+        })
+    })
+}
+
 exports.getArticle = request => findById(request);
 
 exports.allArticle = request => findArticles(request);
@@ -83,8 +109,10 @@ const {myuser} = require('./user')
 exports.saveArticle = async data => {
     if (data.key) {
         await myuser({key: data.key}).then(re => {
+            console.log(re)
             Object.assign(data, {
-                user: re.nicheng || re.username
+                user: re.nicheng || re.username,
+                userId: re._id
             })
         })
     }

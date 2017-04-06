@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Login from './Login.jsx'
 import Regist from './Regist.jsx'
 import Index from './index.jsx'
+import MyArticle from './MyArticle.jsx'
 
 class User extends Component {
     constructor(props) {
@@ -15,6 +16,8 @@ class User extends Component {
               return <Regist/>
             case 'index':
               return <Index/>
+            case 'myarticle':
+              return <MyArticle/>
         }
 
     }

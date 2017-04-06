@@ -163,6 +163,22 @@ user.post('/logout', async ctx => {
     })
 })
 
+user.post('/myArticles', async ctx => {
+    const {myArticles} = require('./mongo/user');
+    const request = JSON.parse(Object.keys(ctx.request.body));
+    await myArticles(request).then(data => {
+        ctx.body = {
+            status: 0,
+            list:data
+        }
+    }, () => {
+        ctx.body = {
+            status: -1,
+            error: '查询失败'
+        }
+    })
+})
+
 router.use('/', article.routes());
 router.use('/user', user.routes());
 
