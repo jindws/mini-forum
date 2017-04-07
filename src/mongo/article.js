@@ -31,6 +31,10 @@ const ArticleSchema = new mongoose.Schema({
     },
     userId: {
         type: String
+    },
+    pingLunNum:{
+      type: Number,
+      default: 0
     }
 })
 
@@ -49,23 +53,33 @@ function findById(request) { //进入文章页面
     })
 }
 
-function addSee(id, see) { //文章浏览次数添加
+function addSee(id) { //文章浏览次数添加
     ArticleModel.findByIdAndUpdate(id, {
-        see
+        $inc:{see:+1}
     }, (error, doc) => {
-        // console.log(see,doc)
+        error&&console.log(error)
     })
 }
+
+function addPingLunNum(id) { //文章浏览次数添加
+    ArticleModel.findByIdAndUpdate(id, {
+        $inc:{pingLunNum:+1}
+    }, (error, doc) => {
+        error&&console.log(error)
+    })
+}
+
+exports.addPingLunNum = addPingLunNum;
 
 function findArticles(current) { //index
     return new Promise(async(resolve, reject) => {
         const count = await ArticleModel.count({}, (error, docs) => docs);
-
         const query = ArticleModel.find({}, {
             title: 1,
             createTime: 1,
             user: 1,
-            see: 1
+            see: 1,
+            pingLunNum:1,
         }).sort({'_id': -1}).skip(10 * current).limit(10)
 
         var promise = query.exec();

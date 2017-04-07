@@ -41,6 +41,14 @@
     dl {
         dd {
             padding: 10px;
+            label {
+                font-size: 12px;
+                padding-left: 8px;
+                color: #899084;
+            }
+            span {
+                float: right;
+            }
         }
         >:nth-child(odd) {
             background-color: #eee;

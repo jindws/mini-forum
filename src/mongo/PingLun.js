@@ -25,10 +25,12 @@ const PingLunSchema = new mongoose.Schema({
 const PinglunModel = db.model("pinglun", PingLunSchema, "pinglun");
 
 function savePinglun(request) {
+    const {addPingLunNum} =require('./article');
     return new Promise((resolve, reject) => {
         PinglunModel.create(request, (error, doc) => {
             if (!error) {
                 resolve()
+                addPingLunNum(request.articleId)
             } else {
                 reject();
             }

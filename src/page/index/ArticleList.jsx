@@ -14,7 +14,7 @@ export default class ArticleList extends Component {
                         <time>{(new Date(it.createTime)).toLocaleString()}</time>
                         <label>{it.user}</label>
                         <Icon type="eye-o"/>{it.see}
-                        <Icon type="message"/>2
+                        <Icon type="message"/>{it.pingLunNum}
                     </div>
                 </dd>
             })

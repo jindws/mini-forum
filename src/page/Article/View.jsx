@@ -24,8 +24,8 @@ class View extends Component {
                 id:this.props.match.params.id
             }
         }).then(data => {
-            this.setState({data})
-            this.props.dispatch(actions.setTitle({title: data.title, backBtn: true}));
+            this.setState({data:data.data})
+            this.props.dispatch(actions.setTitle({title: data.data.title, backBtn: true}));
             this.getPinglun();
         }, () => {
             Modal.error({
@@ -138,9 +138,15 @@ class View extends Component {
                     <Spin spinning={this.state.PLloading} tip="Loading...">
                         <dl>
                         {
-                            this.state.pingluns.map((m,ind)=><dd key={`list_${ind}`}>
-                                      <Input type="textarea" value={m.message} autosize disabled/>
-                            </dd>)
+                            this.state.pingluns.map((m,ind)=>{
+                              const name = m.nicheng||m.username;
+                              const date = m.createTime;
+                              return <dd key={`list_${ind}`}>
+                                  <label style={{display:(name?'':'none')}}>{name}</label>
+                                  <span style={{display:(date?'':'none')}}>{(new Date(date)).toLocaleString()}</span>
+                                  <Input type="textarea" value={m.message} autosize disabled/>
+                            </dd>
+                          })
                         }
                       </dl>
                     </Spin>

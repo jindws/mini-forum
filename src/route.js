@@ -8,7 +8,10 @@ const {getArticle, saveArticle, allArticle} = require('./mongo/article.js');
 article.post('article', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
     await getArticle(request).then(data => {
-        ctx.body = data
+        ctx.body = {
+          status:0,
+          data:Object.assign(data,{userId:null})
+        }
     }, () => {
         ctx.body = {
             status: -1,
@@ -192,6 +195,7 @@ rpinglun.post('/add', async ctx => {
                 status: 0,
                 message: "success"
             }
+            //
         }, () => {
             ctx.body = {
                 status: -1,
