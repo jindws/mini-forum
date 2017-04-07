@@ -11,13 +11,13 @@ module.exports = {
             "redux",
             "react-dom",
             "react-redux",
-            "react-router-dom"
+            "react-router-dom",
+            "mongoose",
         ]
     },
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].js',
-        // publicPath: '/webkoa/'
     },
 
     devServer: {

@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: false,
-        default: ''
+        // default: ''
     },
     createDate: {
         type: Date,
@@ -93,6 +93,7 @@ exports.regist = request => {
     return new Promise((resolve, reject) => {
         checkusers({username: request.username}).then(() => {
             UserModel.create(request, (error, docs) => {
+            //  console.log(request,error)
                 if (!error) {
                     resolve()
                 } else {
@@ -196,7 +197,6 @@ exports.logout = request => {
     })
 }
 
-// const {}
 /**
  * 我的文章
  */

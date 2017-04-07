@@ -22,18 +22,29 @@ class MyArticle extends Component {
             if (!re.status) {
                 key&&this.setTitle(re.user+'的文章');
                 this.setState({list: re.list, show: true});
-                if (!re.list.length) {
-                    Modal.confirm({
-                        title: '温馨提示',
-                        content: '没有找到文章,来写一篇?',
-                        onOk() {
-                            location.replace('#/article/write');
-                        },
-                        onCancel() {
-                            history.go(-1);
-                        }
-                    });
-                }
+                // if (!re.list.length) {
+                    // Modal.confirm({
+                    //     title: '温馨提示',
+                    //     content: '没有找到文章,来写一篇?',
+                    //     onOk() {
+                    //         location.replace('#/article/write');
+                    //     },
+                    //     onCancel() {
+                    //         history.go(-1);
+                    //     }
+                    // });
+                // }
+            }else{
+              Modal.confirm({
+                  title: '温馨提示',
+                  content: '没有找到文章,来写一篇?',
+                  onOk() {
+                      location.replace('#/article/write');
+                  },
+                  onCancel() {
+                      history.go(-1);
+                  }
+              });
             }
         })
     }

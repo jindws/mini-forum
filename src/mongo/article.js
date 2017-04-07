@@ -32,9 +32,9 @@ const ArticleSchema = new mongoose.Schema({
     userId: {
         type: String
     },
-    pingLunNum:{
-      type: Number,
-      default: 0
+    pingLunNum: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -55,17 +55,21 @@ function findById(request) { //进入文章页面
 
 function addSee(id) { //文章浏览次数添加
     ArticleModel.findByIdAndUpdate(id, {
-        $inc:{see:+1}
+        $inc: {
+            see :+ 1
+        }
     }, (error, doc) => {
-        error&&console.log(error)
+        error && console.log(error)
     })
 }
 
 function addPingLunNum(id) { //文章浏览次数添加
     ArticleModel.findByIdAndUpdate(id, {
-        $inc:{pingLunNum:+1}
+        $inc: {
+            pingLunNum :+ 1
+        }
     }, (error, doc) => {
-        error&&console.log(error)
+        error && console.log(error)
     })
 }
 
@@ -79,7 +83,7 @@ function findArticles(current) { //index
             createTime: 1,
             user: 1,
             see: 1,
-            pingLunNum:1,
+            pingLunNum: 1
         }).sort({'_id': -1}).skip(10 * current).limit(10)
 
         var promise = query.exec();
@@ -92,7 +96,9 @@ function findArticles(current) { //index
 
 exports.findArticleByUserId_Count = userId => {
     return new Promise(resolve => {
-        ArticleModel.count({userId}).then(count=> {resolve(count)})
+        ArticleModel.count({userId}).then(count => {
+            resolve(count)
+        })
     })
 }
 
@@ -104,9 +110,16 @@ exports.findArticlesByUserId = userId => {
             title: 1,
             see: 1,
             createTime: 1,
-            pingLunNum:1,
-            user:1,
-        }).sort({'createTime':-1}).exec().then(data => resolve(data), () => reject())
+            pingLunNum: 1,
+            user: 1
+        }).sort({'createTime': -1}).exec().then(data => {
+            if (data.length) {
+                resolve(data)
+            } else {
+                reject()
+            }
+
+        }, () => reject())
     })
 }
 
