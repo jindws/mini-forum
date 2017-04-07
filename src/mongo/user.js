@@ -208,11 +208,9 @@ exports.logout = request => {
  */
 exports.myArticles = request => {
     const {findArticlesByUserId} =require('./article');
-    return new Promise((resolve, reject) => {
-        findUserByKey(request.key).then(data => {
-            findArticlesByUserId(request.id||data._id).then(re=>{
-                resolve(re);
-            },()=>reject());
-        })
-    })
+    if(request.id){
+      return findArticlesByUserId(request.id)
+    }else{
+      return findUserByKey(request.key).then(data => findArticlesByUserId(data._id))
+    }
 }
