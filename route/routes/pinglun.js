@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const getKey = require('./getKey');
 
 let pinglun = new Router();
 

@@ -1,14 +1,8 @@
 const Router = require('koa-router')
-let article = new Router();
+const article = new Router();
+const getKey = require('./getKey');
 
 const {getArticle, saveArticle, allArticle} = require('../../src/mongo/article.js');
-
-
-function getKey(ctx){
-      const re = eval("/" + "key" + "\=([^;]*)/;");
-      const cookie = ctx.request.header.cookie;
-      return  re.exec(cookie)?decodeURI(re.exec(cookie)[1]):''
-}
 
 article.post('article', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));

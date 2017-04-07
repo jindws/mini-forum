@@ -9,6 +9,9 @@ const {
     changeNicheng,
     logout
 } = require('../../src/mongo/user');
+
+const getKey = require('./getKey');
+
 user.post('/login', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
     await login(request).then(data => {
@@ -106,7 +109,7 @@ user.post('/logout', async ctx => {
 })
 
 user.post('/myArticles', async ctx => {
-    const {myArticles} = require('../src/mongo/user');
+    const {myArticles} = require('../../src/mongo/user');
     const request = JSON.parse(Object.keys(ctx.request.body));
     await myArticles(Object.assign(request,{key:getKey(ctx)})).then(data => {
         ctx.body = {
