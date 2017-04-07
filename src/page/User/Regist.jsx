@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
-import {req} from '../../app/fetch'
+import DB from '../../app/DB'
 
 import {
     Form,
@@ -28,14 +28,11 @@ class RegistrationForm extends React.Component {
                 if (this.state.password !== this.state.repassword) {
                     this.setState(prevState => ({validateStatus: Object.assign({}, prevState.validateStatus, {repassword: 'error'})}))
                 } else {
-                    req({
-                        url: 'user/regist',
-                        body: {
-                            username: values.username,
-                            password: md5(values.password),
-                            nicheng: values.nicheng
-                        }
-                    }).then(data => {
+                  DB.User.regist({
+                    username: values.username,
+                    password: md5(values.password),
+                    nicheng: values.nicheng
+                  }).then(data => {
                         if (!data.status) {
                             Modal.success({
                                 title: '温馨提示',
@@ -75,12 +72,7 @@ class RegistrationForm extends React.Component {
     checkNow(name, val) {
         this.setState(prevState => ({validateStatus: Object.assign({}, prevState.validateStatus, {[name]: 'validating'})}));
 
-        req({
-            url: 'user/checkuser',
-            body: {
-                [name]: val
-            }
-        }).then(data => {
+        DB.User.checkuser({[name]:val}).then(data => {
             if (data.status) {
                 this.setState(prevState => ({validateStatus: Object.assign({}, prevState.validateStatus, {[name]: 'error'})}))
             } else {

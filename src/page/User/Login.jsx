@@ -9,8 +9,8 @@ import {
     Checkbox,
     Modal
 } from 'antd';
-import {req} from '../../app/fetch'
 import Cookie from '../../component/Cookie'
+import DB from '../../app/DB'
 
 const FormItem = Form.Item;
 
@@ -28,13 +28,10 @@ class NormalLoginForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                req({
-                    url: 'user/login',
-                    body: {
-                        username: values.username,
-                        password: md5(values.password)
-                    }
-                }).then(re => {
+              DB.User.login({
+                username: values.username,
+                password: md5(values.password)
+              }).then(re => {
                     if (!re.status) {
                         Cookie.setCookie('key', re.data.key, 1);
                         location.replace('#/user/index');
@@ -75,13 +72,7 @@ class NormalLoginForm extends Component {
                     )}
                 </FormItem>
                 <FormItem>
-                    {getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: true
-                    })(
-                        <Checkbox>Remember me</Checkbox>
-                    )}
-                    <a className="login-form-forgot">忘记密码</a>
+                    <a className="login-form-forgot" hidden>忘记密码</a>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                     </Button>

@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 import {Spin, Modal, Input, Tabs, Button,Tooltip} from 'antd';
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
-import {req} from '../../app/fetch'
 const TabPane = Tabs.TabPane;
 import Cookie from '../../component/Cookie'
+import DB from '../../app/DB'
 
 class View extends Component {
     constructor(props) {
@@ -20,40 +20,33 @@ class View extends Component {
     }
 
     componentDidMount() {
-        req({
-            url: '/article',
-            body: {
-                id:this.props.match.params.id
-            }
-        }).then(data => {
-            this.setState({data:data.data})
-            this.props.dispatch(actions.setTitle({title: data.data.title, backBtn: true}));
-            this.getPinglun();
-            if (data.data.userId) {
-                this.setState({TooltipVisible: true})
-                setTimeout(() => {
-                    this.setState({TooltipVisible: false})
-                }, 3000);
-            }
-        }, () => {
-            Modal.error({
-                title: '温馨提示',
-                content: '文章不存在或网络错误!',
-                onOk() {
-                    history.go(-1)
-                }
-            });
-        })
+      DB.Article.article({id: this.props.match.params.id}).then(data => {
+          this.setState({data: data.data})
+          this.props.dispatch(actions.setTitle({title: data.data.title, backBtn: true}));
+          this.getPinglun();
+          if (data.data.userId) {
+              this.setState({TooltipVisible: true})
+              this.toolState = setTimeout(() => {
+                  this.setState({TooltipVisible: false})
+              }, 3000);
+          }
+      }, () => {
+          Modal.error({
+              title: '温馨提示',
+              content: '文章不存在或网络错误!',
+              onOk() {
+                  history.go(-1)
+              }
+          });
+      })
+  }
 
+    componentWillUnmount(){
+        clearTimeout(this.toolState);
     }
 
     getPinglun(){
-      req({
-          url:'/pinglun/getpinglun',
-          body:{
-            articleId:this.state.articleId
-          }
-      }).then(data=>{
+      DB.Article.getPinglun({articleId:this.state.articleId}).then(data=>{
         if(!data.status){
           this.setState({
               PLloading:false,
@@ -73,12 +66,15 @@ class View extends Component {
   changeTab(key) {
       if (+ key === 2) {
           if (!Cookie.getCookie('key')) {
+              this.setState({TooltipVisible: false})
               Modal.confirm({
                   title: '温馨提示',
                   content: '请先登录!',
                   okText: '现在登录',
                   cancelText: '取消',
-                  onOk: () => location.hash = '#/user/login'
+                  onOk: () => {
+                    location.hash = '#/user/login'
+                  }
               });
           } else {
               this.setState({activityKey: 2})
@@ -100,13 +96,12 @@ class View extends Component {
           });
           return;
         }
-        req({
-            url: 'pinglun/add',
-            body: {
-                articleId: this.state.articleId,
-                message: this.state.message
-            }
-        }).then(data => {
+
+
+
+        DB.Article.addPingLun({
+          articleId: this.state.articleId,
+          message: this.state.message}).then(data => {
             if (!data.status) {
                 Modal.success({
                     title: '温馨提示',

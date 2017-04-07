@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
-import {req} from '../../app/fetch'
 import {Input, Button, Modal} from 'antd'
+import DB from '../../app/DB'
 
 class Write extends Component {
 
@@ -30,12 +30,10 @@ class Write extends Component {
             });
             return;
         }
-        req({
-            url: 'article/saveArticle',
-            body: {
-                title: this.state.title,
-                article: this.state.article
-            }
+
+        DB.Article.saveArticle({
+          title: this.state.title,
+          article: this.state.article
         }).then(data => {
             if (!data.status) { //success
                 Modal.success({

@@ -6,7 +6,6 @@ module.exports = {
     entry: {
         apps: './src/app/app.jsx',
         common: [
-            "jquery",
             "whatwg-fetch",
             "react",
             "normalize.css",
@@ -64,7 +63,7 @@ module.exports = {
             }
         }),
         new HtmlWebpackPlugin({template: './index.html'}),
-        new webpack.ProvidePlugin({"$": "jquery",md5:'md5'}),
+        new webpack.ProvidePlugin({md5:'md5'}),
         new webpack.optimize.CommonsChunkPlugin({names: ['common'], minChunks: Infinity}),
         new webpack.BannerPlugin("Copyright Jindw inc.")
     ]

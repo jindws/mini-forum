@@ -6,14 +6,13 @@ module.exports = {
     entry: {
         apps: './src/app/app.jsx',
         common: [
-            "jquery",
             "react",
             "normalize.css",
         ]
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].js', //最终打包生产的文件名
+        filename: '[name].js', 
         // publicPath: '/webkoa/'
     },
 
@@ -53,7 +52,7 @@ module.exports = {
             __PRO__: false, // 生产环境
         }),
         new HtmlWebpackPlugin({template: './index.html'}),
-        new webpack.ProvidePlugin({"$": "jquery",md5:'md5'}),
+        new webpack.ProvidePlugin({md5:'md5'}),
         new webpack.optimize.CommonsChunkPlugin({names: ['common'], minChunks: Infinity}),
         new webpack.BannerPlugin("Copyright Jindw inc.")
     ]

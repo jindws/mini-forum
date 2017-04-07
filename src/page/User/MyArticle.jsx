@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {req} from '../../app/fetch'
 import * as actions from '../../app/actions.jsx'
 import ArticleList from '../index/ArticleList.jsx'
 import {Spin, Modal} from 'antd'
+import DB from '../../app/DB'
+
 class MyArticle extends Component {
 
     constructor(props) {
@@ -17,9 +18,7 @@ class MyArticle extends Component {
     componentDidMount() {
         const key = this.state.key;
         key||this.setTitle('我的文章');
-        req({url: 'user/myArticles',body:{
-          id:key
-        }}).then(re => {
+        DB.User.myArticles({id:key}).then(re => {
             if (!re.status) {
                 key&&this.setTitle(re.user+'的文章');
                 this.setState({list: re.list, show: true});

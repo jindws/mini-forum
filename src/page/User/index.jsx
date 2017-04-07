@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
-import {req} from '../../app/fetch'
 import {Button, Modal, Input, Icon} from 'antd'
+import DB from '../../app/DB'
 
 class Index extends Component {
     constructor() {
@@ -26,9 +26,7 @@ class Index extends Component {
             return;
         }
         this.setState({confirmLoading: true});
-        req({url: 'user/changeNicheng', body: {
-                nicheng
-            }}).then(data => {
+        DB.User.changeNicheng({nicheng}).then(data => {
             if (!data.status) {
                 this.setState({visible: false})
                 Modal.success({title: '温馨提示', content: '操作成功'});
@@ -41,7 +39,7 @@ class Index extends Component {
 
     componentDidMount() {
         this.props.dispatch(actions.setTitle({title: '个人中心', backBtn: true, right: false}));
-        req({url: 'user/message'}).then(re => {
+        DB.User.message().then(re => {
             if (!re.status) {
                 this.setState({user: re.data})
             }

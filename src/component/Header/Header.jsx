@@ -5,14 +5,12 @@ const confirm = Modal.confirm;
 import {connect} from 'react-redux'
 
 import Cookie from '../Cookie'
-import {req} from '../../app/fetch'
+import DB from '../../app/DB'
 
 class Header extends Component {
     constructor() {
         super();
-        this.state = {
-            // key: Cookie.getCookie('key')
-        }
+        this.state = {}
     }
 
     backBtn() {
@@ -26,12 +24,7 @@ class Header extends Component {
             title: '温馨提示',
             content: '确认退出登录?',
             onOk: () => {
-                req({
-                    url: '/user/logout',
-                    body: {
-                        id: this.state.key
-                    }
-                }).then(async data => {
+              DB.User.logout({id: this.state.key}).then(async data => {
                     if (!data.status) {
                         await Cookie.clearCookie('key');
                         this.setState({key: ''})

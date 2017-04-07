@@ -10,13 +10,12 @@
 - antd
 - redux
 - postcss
-- forever
 
 
 ###其他技术
-- jquery
 - fetch
 - Cookie
+- forever
 
 ## http://139.224.14.93:9003/#/
 >建议使用手机模式查看

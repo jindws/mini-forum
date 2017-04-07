@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
 import {Spin, Icon, Pagination} from 'antd'
-import {req} from '../../app/fetch'
 import ArticleList from './ArticleList.jsx'
 import './index.css'
+import '../../app/DB'
+import DB from '../../app/DB'
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -23,12 +24,7 @@ class Index extends Component {
     }
 
     getList() {
-        req({
-            url: '/list',
-            body: {
-                current: this.state.current
-            }
-        }).then(data => this.setState({data}));
+        DB.Index.getList({current: this.state.current}).then(data => this.setState({data}));
     }
 
     changeCurrent(current) {
@@ -40,7 +36,6 @@ class Index extends Component {
 
     render() {
         const data = this.state.data;
-        console.log()
         if (!data) {
             return <section className='spin'><Spin/></section>;
         } else if (!data.list) {

@@ -14,7 +14,6 @@
   "dependencies": {
     "babel-plugin-import": "^1.1.1",
     "babel-polyfill": "^6.23.0",
-    "jquery": "^3.2.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-convert": "^1.2.0",
