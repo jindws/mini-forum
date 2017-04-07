@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
     nicheng: {
         type: String,
         unique: true,
-        required: false
+        required: false,
+        default: ''
     },
     createDate: {
         type: Date,
@@ -100,13 +101,6 @@ exports.regist = request => {
             });
         }, () => {
             reject();
-            // UserModel.create(request, (error, docs) => {
-            //     if (!error) {
-            //         resolve()
-            //     } else {
-            //         reject();
-            //     }
-            // });
         })
     })
 }

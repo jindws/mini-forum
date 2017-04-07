@@ -8,11 +8,15 @@ module.exports = {
         common: [
             "react",
             "normalize.css",
+            "redux",
+            "react-dom",
+            "react-redux",
+            "react-router-dom"
         ]
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].js', 
+        filename: '[name].js',
         // publicPath: '/webkoa/'
     },
 

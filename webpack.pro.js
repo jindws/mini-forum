@@ -10,6 +10,10 @@ module.exports = {
             "react",
             "normalize.css",
             "babel-polyfill",
+            "redux",
+            "react-dom",
+            "react-redux",
+            "react-router-dom"
         ]
     },
     output: {
