@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Spin, Modal, Input, Tabs, Button} from 'antd';
+import {Spin, Modal, Input, Tabs, Button,Tooltip} from 'antd';
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
 import {req} from '../../app/fetch'
@@ -13,7 +13,9 @@ class View extends Component {
             iconLoading: false,
             activityKey: 1,
             PLloading:true,
-            pingluns:[]
+            pingluns:[],
+            TooltipVisible:false,
+            articleId:this.props.match.params.id
         }
     }
 
@@ -27,6 +29,12 @@ class View extends Component {
             this.setState({data:data.data})
             this.props.dispatch(actions.setTitle({title: data.data.title, backBtn: true}));
             this.getPinglun();
+            if (data.data.userId) {
+                this.setState({TooltipVisible: true})
+                setTimeout(() => {
+                    this.setState({TooltipVisible: false})
+                }, 3000);
+            }
         }, () => {
             Modal.error({
                 title: '温馨提示',
@@ -36,13 +44,14 @@ class View extends Component {
                 }
             });
         })
+
     }
 
     getPinglun(){
       req({
           url:'/pinglun/getpinglun',
           body:{
-            articleId:this.props.match.params.id
+            articleId:this.state.articleId
           }
       }).then(data=>{
         if(!data.status){
@@ -94,7 +103,7 @@ class View extends Component {
         req({
             url: 'pinglun/add',
             body: {
-                articleId: this.props.match.params.id,
+                articleId: this.state.articleId,
                 message: this.state.message
             }
         }).then(data => {
@@ -135,8 +144,10 @@ class View extends Component {
         return <section id='article'>
               <div id='top'>
                   <h1>{data.title}</h1>
-                  <p><span>作者:{data.user}</span>
-                  <span>{(new Date(data.createTime)).toLocaleString()}</span></p>
+                  <p><Tooltip onClick={()=>{
+                      data.userId?location.hash=`#/user/list/${data.userId}`:''
+                    }} title="点击查看该作者更多文章" placement='right' visible={this.state.TooltipVisible}>作者:{data.user}</Tooltip>
+                  <label>{(new Date(data.createTime)).toLocaleString()}</label></p>
               </div>
               <Input id='main' value={data.article} type="textarea" autosize disabled/>
 

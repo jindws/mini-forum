@@ -98,20 +98,15 @@ exports.findArticleByUserId_Count = userId => {
 
 exports.findArticlesByUserId = userId => {
     return new Promise((resolve, reject) => {
-        ArticleModel.find({
+        const query = ArticleModel.find({
             userId
         }, {
             title: 1,
             see: 1,
             createTime: 1,
             pingLunNum:1,
-        }, (error, docs) => {
-            if (docs) {
-                resolve(docs)
-            } else {
-                reject();
-            }
-        })
+            user:1,
+        }).sort({'createTime':-1}).exec().then(data => resolve(data), () => reject())
     })
 }
 

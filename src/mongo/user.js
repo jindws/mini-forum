@@ -210,7 +210,7 @@ exports.myArticles = request => {
     const {findArticlesByUserId} =require('./article');
     return new Promise((resolve, reject) => {
         findUserByKey(request.key).then(data => {
-            findArticlesByUserId(data._id).then(re=>{
+            findArticlesByUserId(request.id||data._id).then(re=>{
                 resolve(re);
             },()=>reject());
         })

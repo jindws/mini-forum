@@ -9,7 +9,7 @@ article.post('article', async ctx => {
     await getArticle(request).then(data => {
         ctx.body = {
           status:0,
-          data:Object.assign(data,{userId:null})
+          data:Object.assign(data)
         }
     }, () => {
         ctx.body = {

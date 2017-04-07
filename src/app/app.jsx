@@ -27,6 +27,7 @@ class App extends Component {
                         <Route exact path="/" component={Index}/>
                         <Route path="/article/write" component={Article}/>
                         <Route path="/article/:id" component={Article}/>
+                        <Route path="/User/list/:key" component={User}/>
                         <Route path="/User/:type" component={User}/>
                         <Route component={Index}/>
                     </Switch>

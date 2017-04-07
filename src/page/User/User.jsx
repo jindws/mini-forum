@@ -17,8 +17,12 @@ class User extends Component {
             case 'index':
               return <Index/>
             case 'myarticle':
-              return <MyArticle/>
+              return <MyArticle {...this.props}/>
         }
+        if(this.props.match.params.key){
+            return <MyArticle {...this.props}/>
+        }
+
 
     }
 }

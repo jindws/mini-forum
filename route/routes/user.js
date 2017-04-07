@@ -30,17 +30,10 @@ user.post('/login', async ctx => {
 user.post('/checkuser', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
     await checkuser(request).then(data => {
-        // ctx.body = {
-        //     status: -1,
-        //     error: '不可注册'
-        // }
         ctx.body = {
             status: 0
         }
     }, () => {
-        // ctx.body = {
-        //     status: 0
-        // }
         ctx.body = {
             status: -1,
             error: '不可注册'
@@ -111,10 +104,11 @@ user.post('/logout', async ctx => {
 user.post('/myArticles', async ctx => {
     const {myArticles} = require('../../src/mongo/user');
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await myArticles(Object.assign(request,{key:getKey(ctx)})).then(data => {
+    await myArticles(Object.assign({key:getKey(ctx)},request)).then(data => {
         ctx.body = {
             status: 0,
-            list: data
+            list: data,
+            user:data[0].user
         }
     }, () => {
         ctx.body = {

@@ -9,14 +9,19 @@ class MyArticle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: []
+            list: [],
+            key:this.props.match.params.key,
         }
     }
 
     componentDidMount() {
-        this.props.dispatch(actions.setTitle({title: '我的文章', backBtn: true, right: false}));
-        req({url: 'user/myArticles'}).then(re => {
+        const key = this.state.key;
+        key||this.setTitle('我的文章');
+        req({url: 'user/myArticles',body:{
+          id:key
+        }}).then(re => {
             if (!re.status) {
+                key&&this.setTitle(re.user+'的文章');
                 this.setState({list: re.list, show: true});
                 if (!re.list.length) {
                     Modal.confirm({
@@ -32,6 +37,15 @@ class MyArticle extends Component {
                 }
             }
         })
+    }
+
+    setTitle(title){
+        this.props.dispatch(actions.setTitle({
+              title,
+              backBtn: true,
+              right: false
+          })
+        );
     }
 
     render() {
