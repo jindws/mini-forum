@@ -150,7 +150,7 @@ exports.myuser = request => {
 exports.changeNicheng = request => {
     const nicheng = request.nicheng;
     return new Promise((resolve, reject) => {
-        checkusers({nicheng}).then(() => { //可以注册
+        checkusers({nicheng}).then(() => {
             UserModel.findOneAndUpdate({
                 key: request.key
             }, {

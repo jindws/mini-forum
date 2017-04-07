@@ -13,15 +13,9 @@ module.exports = {
             "babel-polyfill",
         ]
     },
-
-    // output: {
-    //     path: path.resolve(__dirname, './dist'),
-    //     filename: 'app.js',
-    //     publicPath: '/',
-    // },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].js', //最终打包生产的文件名
+        filename: '[name].js',
         // publicPath: '/webkoa/'
     },
 
