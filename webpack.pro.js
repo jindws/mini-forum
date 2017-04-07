@@ -5,22 +5,12 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
         apps: './src/app/app.jsx',
-        common: [ // "babel-polyfill",
-            // "react-dom",
-            // "react-redux",
-            // "redux",
-            // "react-motion",
-            // "react-router-dom",
-            // "dateformat",
-            // "sweetalert2",
-            // "react-router-transition",
-            // "es6-promise",
-            // "./node_modules/sweetalert2/dist/sweetalert2.css",
+        common: [
             "jquery",
             "whatwg-fetch",
             "react",
             "normalize.css",
-            "animate.css",
+            "babel-polyfill",
         ]
     },
 

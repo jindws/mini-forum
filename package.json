@@ -8,7 +8,7 @@
     "webpack": "webpack --watch --progress",
     "run": "nodemon main",
     "pro": "nodemon main&webpack --watch --progress --config webpack.pro.js",
-    "build":"webpack --progress --config webpack.pro.js",
+    "build": "webpack --progress --config webpack.pro.js",
     "forever": " webpack --progress --config webpack.pro.js&&forever restart main.js"
   },
   "dependencies": {
@@ -29,7 +29,6 @@
     "webpack-dev-server": "^2.4.2"
   },
   "devDependencies": {
-    "animate.css": "^3.5.2",
     "antd": "^2.8.3",
     "autoprefixer": "^6.7.7",
     "babel": "^6.23.0",

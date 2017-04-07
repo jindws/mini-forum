@@ -19,13 +19,13 @@ const PingLunSchema = new mongoose.Schema({
         type: String,
         unique: false,
         required: true
-    },
+    }
 })
 
 const PinglunModel = db.model("pinglun", PingLunSchema, "pinglun");
 
 function savePinglun(request) {
-    const {addPingLunNum} =require('./article');
+    const {addPingLunNum} = require('./article');
     return new Promise((resolve, reject) => {
         PinglunModel.create(request, (error, doc) => {
             if (!error) {
@@ -45,20 +45,26 @@ function getPinglun(articleId) {
     return new Promise((resolve, reject) => {
         PinglunModel.find({
             articleId
-        },{
-          _id:0,
-          createTime:1,
-          message:1,
-          userId:1,
-        }, (error, docs) => {
+        }, {
+            _id: 0,
+            createTime: 1,
+            message: 1,
+            userId: 1
+        }).sort({'createTime': -1}).exec((error, docs) => {
             if (docs.length) {
                 resolve(docs);
             } else {
                 reject();
             }
         })
+        //  (error, docs) => {
+        //     if (docs.length) {
+        //         resolve(docs);
+        //     } else {
+        //         reject();
+        //     }
+        // })
     })
 }
-
 
 exports.getPinglun = getPinglun;

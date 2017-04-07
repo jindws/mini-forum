@@ -116,13 +116,19 @@ class View extends Component {
                   }
               });
             }
-
+        },()=>{
+          Modal.error({
+              title: '温馨提示',
+              content: '操作失败',
+              onOk: () => {
+                  this.setState({iconLoading: false});
+              }
+          });
         })
     }
 
     render() {
         const data = this.state.data;
-        console.log(this.state.pingluns)
         if (!data){
             return <section className='spin'><Spin/></section>;
         }
@@ -133,6 +139,7 @@ class View extends Component {
                   <span>{(new Date(data.createTime)).toLocaleString()}</span></p>
               </div>
               <Input id='main' value={data.article} type="textarea" autosize disabled/>
+
               <Tabs id='pinglun' activeKey={`${this.state.activityKey}`} onChange={this.changeTab.bind(this)}>
                   <TabPane tab="最新评论" key="1">
                     <Spin spinning={this.state.PLloading} tip="Loading...">
@@ -151,6 +158,7 @@ class View extends Component {
                       </dl>
                     </Spin>
                   </TabPane>
+
                   <TabPane tab="我要评论" key="2">
                       <Spin spinning={this.state.iconLoading} tip="Loading...">
                           <Input onChange={e=>this.setState({message:e.target.value})} value={this.state.message} placeholder='请输入你的评论' type="textarea" autosize={{minRows: 3}}/>

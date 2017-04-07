@@ -5,11 +5,11 @@ exports.req = (...msg) => {
 }
 
 async function fetchs(msg = {}) {
-    const key = Cookie.getCookie('key');
+    // const key = Cookie.getCookie('key');
     let body = Object.assign({}, msg.body || {});
-    if (key) {
-        Object.assign(body, {key: Cookie.getCookie('key')})
-    }
+    // if (key) {
+    //     Object.assign(body, {key: Cookie.getCookie('key')})
+    // }
     return await new Promise((resolve, reject) => {
         fetch(msg.url, {
             credentials: 'include',
@@ -21,6 +21,6 @@ async function fetchs(msg = {}) {
             body: JSON.stringify(body)
         }).then(re => {
             re.json().then(data => resolve(data), data => reject(data))
-        })
+        },()=>reject());
     })
 }

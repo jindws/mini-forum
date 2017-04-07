@@ -103,7 +103,8 @@ exports.findArticlesByUserId = userId => {
         }, {
             title: 1,
             see: 1,
-            createTime: 1
+            createTime: 1,
+            pingLunNum:1,
         }, (error, docs) => {
             if (docs) {
                 resolve(docs)

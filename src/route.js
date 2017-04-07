@@ -5,6 +5,14 @@ let router = new Router();
 /////////article
 let article = new Router();
 const {getArticle, saveArticle, allArticle} = require('./mongo/article.js');
+
+
+function getKey(ctx){
+      const re = eval("/" + "key" + "\=([^;]*)/;");
+      const cookie = ctx.request.header.cookie;
+      return  re.exec(cookie)?decodeURI(re.exec(cookie)[1]):''
+}
+
 article.post('article', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
     await getArticle(request).then(data => {
@@ -22,7 +30,7 @@ article.post('article', async ctx => {
 
 article.post('article/saveArticle', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await saveArticle(request).then(() => {
+    await saveArticle(Object.assign(request,{key:getKey(ctx)})).then(() => {
         ctx.body = {
             status: 0,
             message: '发帖成功'
@@ -123,10 +131,10 @@ user.post('/regist', async ctx => {
 
 user.post('/message', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await myuser(request).then(data => {
+    await myuser(Object.assign(request,{key:getKey(ctx)})).then(data => {
         ctx.body = {
             status: 0,
-            data
+            data:Object.assign(data,{_id:null}),
         }
     }, () => {
         ctx.body = {
@@ -138,7 +146,7 @@ user.post('/message', async ctx => {
 
 user.post('/changeNicheng', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await changeNicheng(request).then(data => {
+    await changeNicheng(Object.assign(request,{key:getKey(ctx)})).then(data => {
         ctx.body = {
             status: 0,
             result: 'success'
@@ -153,7 +161,7 @@ user.post('/changeNicheng', async ctx => {
 
 user.post('/logout', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await logout(request).then(data => {
+    await logout(Object.assign(request,{key:getKey(ctx)})).then(data => {
         ctx.body = {
             status: 0,
             result: 'success'
@@ -169,7 +177,7 @@ user.post('/logout', async ctx => {
 user.post('/myArticles', async ctx => {
     const {myArticles} = require('./mongo/user');
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await myArticles(request).then(data => {
+    await myArticles(Object.assign(request,{key:getKey(ctx)})).then(data => {
         ctx.body = {
             status: 0,
             list: data
@@ -189,7 +197,8 @@ const {savePinglun} = require('./mongo/PingLun');
 const {findUserByKey, findUserById} = require('./mongo/user');
 rpinglun.post('/add', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await findUserByKey(request.key).then(async data => {
+    // Object.assign(request,{key:getKey(ctx)})
+    await findUserByKey(getKey(ctx)).then(async data => {
         await savePinglun(Object.assign(request, {userId: data._id})).then(() => {
             ctx.body = {
                 status: 0,
@@ -208,10 +217,10 @@ rpinglun.post('/add', async ctx => {
 function mergeUserAndPL(data) {
     return new Promise((resolve, reject) => {
         let datas = [];
-        data.forEach(async dt => {
-            await findUserById(dt.userId).then(async re => {
-                await datas.push(Object.assign({}, JSON.parse(JSON.stringify(dt)), JSON.parse(JSON.stringify(re)),{userId:null}));
-                if (datas.length === data.length) {
+        data.forEach(async (dt,index) => {
+            await findUserById(dt.userId).then( re => {
+                datas[index] = (Object.assign({}, JSON.parse(JSON.stringify(dt)), JSON.parse(JSON.stringify(re)),{userId:null}));
+                if (datas.filter(t=>t).length === data.length) {
                     resolve(datas);
                 }
             })

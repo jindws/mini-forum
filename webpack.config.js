@@ -9,7 +9,6 @@ module.exports = {
             "jquery",
             "react",
             "normalize.css",
-            "animate.css",
         ]
     },
     output: {

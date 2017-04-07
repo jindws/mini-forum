@@ -39,11 +39,7 @@ class Index extends Component {
             }
         })
     }
-    handleCancel() {
-        console.log('Clicked cancel button');
-        this.setState({visible: false});
-    }
-
+    
     componentDidMount() {
         this.props.dispatch(actions.setTitle({title: '个人中心', backBtn: true, right: false}));
         req({url: 'user/message'}).then(re => {
@@ -61,7 +57,7 @@ class Index extends Component {
                 <dt>欢迎用户:{user.nicheng || user.username}
                     <label>您已注册{zhuceDay+1}天</label>
                   <Button style={{display:(user.nicheng?'none':'')}} type="dashed" onClick={this.showModal.bind(this)}>添加昵称</Button>
-                    <Modal title="您仅有一次修改的机会" visible={this.state.visible} onOk={this.handleOk.bind(this)} confirmLoading={this.state.confirmLoading} onCancel={this.handleCancel.bind(this)}>
+                    <Modal title="您仅有一次修改的机会" visible={this.state.visible} onOk={this.handleOk.bind(this)} confirmLoading={this.state.confirmLoading}>
                         <p>{this.state.ModalText}</p>
                         <Input onBlur={e => {
                             this.setState({newNicheng: e.target.value})
