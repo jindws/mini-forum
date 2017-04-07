@@ -49,7 +49,7 @@ function getPinglun(articleId) {
           message:1,
           userId:1,
         }, (error, docs) => {
-            if (docs) {
+            if (docs.length) {
                 resolve(docs);
             } else {
                 reject();

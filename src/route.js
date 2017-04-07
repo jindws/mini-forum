@@ -224,6 +224,11 @@ rpinglun.post('/getpinglun', async ctx => {
                 status: 0,
                 list
             }
+        },()=>{
+          ctx.body = {
+              status: 0,
+              list:[]
+          }
         })
     }, () => {
         ctx.body = {

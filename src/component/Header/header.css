@@ -20,7 +20,7 @@ header {
         }
     }
     span {
-        white-space: normal;
+        white-space: nowrap;
         flex: 0 0 80%;
         flex-basis: 72%;
         overflow: hidden;

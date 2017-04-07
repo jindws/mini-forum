@@ -17,7 +17,7 @@ module.exports = {
             // "es6-promise",
             // "./node_modules/sweetalert2/dist/sweetalert2.css",
             "jquery",
-            // "whatwg-fetch",
+            "whatwg-fetch",
             "react",
             "normalize.css",
             "animate.css",
@@ -80,7 +80,7 @@ module.exports = {
             }
         }),
         new HtmlWebpackPlugin({template: './index.html'}),
-      new webpack.ProvidePlugin({"$": "jquery",md5:'md5'}),
+        new webpack.ProvidePlugin({"$": "jquery",md5:'md5'}),
         new webpack.optimize.CommonsChunkPlugin({names: ['common'], minChunks: Infinity}),
         new webpack.BannerPlugin("Copyright Jindw inc.")
     ]

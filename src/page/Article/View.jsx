@@ -13,9 +13,7 @@ class View extends Component {
             iconLoading: false,
             activityKey: 1,
             PLloading:true,
-            pingluns:{
-              list:[]
-            }
+            pingluns:[]
         }
     }
 
@@ -46,12 +44,21 @@ class View extends Component {
           body:{
             articleId:this.props.match.params.id
           }
-      }).then(pingluns=>[
+      }).then(data=>{
+        if(!data.status){
           this.setState({
-            PLloading:false,
-            pingluns
+              PLloading:false,
+              pingluns:data.list
           })
-      ])
+        }else{
+          this.setState({
+              PLloading:false,
+              pingluns:[{
+                message:'暂无评论'
+              }]
+          })
+        }
+      })
     }
 
   changeTab(key) {
@@ -131,7 +138,7 @@ class View extends Component {
                     <Spin spinning={this.state.PLloading} tip="Loading...">
                         <dl>
                         {
-                            this.state.pingluns.list.map((m,ind)=><dd key={`list_${ind}`}>
+                            this.state.pingluns.map((m,ind)=><dd key={`list_${ind}`}>
                                       <Input type="textarea" value={m.message} autosize disabled/>
                             </dd>)
                         }
