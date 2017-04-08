@@ -17,6 +17,12 @@ window.__store__ = stores;
 import './default.css'
 
 class App extends Component {
+    constructor() {
+        super()
+        if (location.port) {
+            location.href = `${location.protocol}//${location.hostname}/mini_forum/`
+        }
+    }
     render() {
         return <section>
             <Header/>
