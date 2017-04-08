@@ -14,7 +14,6 @@ module.exports = {
             "react-dom",
             "react-redux",
             "react-router-dom",
-            "mongoose",
         ]
     },
     output: {

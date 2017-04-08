@@ -143,6 +143,7 @@ exports.myuser = request => {
 }
 
 exports.changeNicheng = request => {
+    const {changeArticleAuthor} = require('./article');
     const nicheng = request.nicheng;
     return new Promise((resolve, reject) => {
         checkusers({nicheng}).then(() => {
@@ -150,9 +151,10 @@ exports.changeNicheng = request => {
                 key: request.key
             }, {
                 nicheng
-            }, (error, docs) => {
-                if (docs) {
-                    resolve()
+            }, (error, doc) => {
+                if (doc) {
+                    changeArticleAuthor(doc._id,nicheng);
+                    resolve();
                 } else {
                     reject({error: 操作失败})
                 }

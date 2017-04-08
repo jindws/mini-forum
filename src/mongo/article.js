@@ -149,3 +149,8 @@ exports.saveArticle = async data => {
         })
     })
 }
+
+
+exports.changeArticleAuthor = async (userId,user)=>{
+    ArticleModel.update({userId},{user}).exec();
+}
