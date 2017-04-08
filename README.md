@@ -14,7 +14,7 @@
 
 ###其他技术
 - fetch
-- Cookie
+- seeeion
 - forever
 - nginx
 

@@ -19,33 +19,19 @@ class MyArticle extends Component {
         const key = this.state.key;
         key||this.setTitle('我的文章');
         DB.User.myArticles({id:key}).then(re => {
-            if (!re.status) {
-                key&&this.setTitle(re.user+'的文章');
-                this.setState({list: re.list, show: true});
-                // if (!re.list.length) {
-                    // Modal.confirm({
-                    //     title: '温馨提示',
-                    //     content: '没有找到文章,来写一篇?',
-                    //     onOk() {
-                    //         location.replace('#/article/write');
-                    //     },
-                    //     onCancel() {
-                    //         history.go(-1);
-                    //     }
-                    // });
-                // }
-            }else{
-              Modal.confirm({
-                  title: '温馨提示',
-                  content: '没有找到文章,来写一篇?',
-                  onOk() {
-                      location.replace('#/article/write');
-                  },
-                  onCancel() {
-                      history.go(-1);
-                  }
-              });
-            }
+              key&&this.setTitle(re.user+'的文章');
+              this.setState({list: re.list, show: true});
+        },()=>{
+          Modal.confirm({
+               title: '温馨提示',
+               content: '没有找到文章,来写一篇?',
+               onOk() {
+                   location.replace('#/article/write');
+               },
+               onCancel() {
+                   history.go(-1);
+               }
+           });
         })
     }
 

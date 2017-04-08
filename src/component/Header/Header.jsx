@@ -4,13 +4,14 @@ const confirm = Modal.confirm;
 
 import {connect} from 'react-redux'
 
-import Cookie from '../Cookie'
+// import Cookie from '../Cookie'
 import DB from '../../app/DB'
 
 class Header extends Component {
     constructor() {
         super();
-        this.state = {}
+        this.state = {};
+        // this.myMenu();
     }
 
     backBtn() {
@@ -24,19 +25,19 @@ class Header extends Component {
             title: '温馨提示',
             content: '确认退出登录?',
             onOk: () => {
-              DB.User.logout({id: this.state.key}).then(async data => {
-                    if (!data.status) {
-                        await Cookie.clearCookie('key');
-                        this.setState({key: ''})
-                    }
-                })
+                DB.User.logout().then(()=>this.myMenu())
             }
         });
     }
 
-    myMenu() {
-        if (Cookie.getCookie('key')) {
-            return <Menu>
+    componentWillReceiveProps(){
+      this.myMenu();
+    }
+
+    async myMenu() {
+        DB.User.message().then(()=>{
+          this.setState({
+            menu:<Menu>
                 <Menu.Item key="0">
                     <a href="#/user/index"><Icon type="home" />个人中心</a>
                 </Menu.Item>
@@ -49,8 +50,10 @@ class Header extends Component {
                     <a href="javascript:;" onClick={this.logOut.bind(this)}><Icon type="logout" />注销</a>
                 </Menu.Item>
             </Menu>
-        } else {
-            return <Menu>
+          })
+        },()=>{
+          this.setState({
+            menu:<Menu>
                 <Menu.Item key="0">
                     <a href="#/user/login"><Icon type="login" />登录</a>
                 </Menu.Item>
@@ -63,19 +66,18 @@ class Header extends Component {
                     <a href="#/article/write"><Icon type="book" />匿名发帖</a>
                 </Menu.Item>
             </Menu>
-        }
-
+          })
+        })
     }
 
     render() {
         const title = this.props.myTitle.title;
         document.title = title;
-
         return <header>
             {this.backBtn.bind(this)()}
             <span>{title}</span>
-            {this.props.myTitle.right !== false
-                ? <Dropdown overlay={this.myMenu.bind(this)()} trigger={['click']}>
+            {this.props.myTitle.right !== false&&this.state.menu
+                ? <Dropdown overlay={this.state.menu} trigger={['click']}>
                         <Icon type="menu-fold"/>
                     </Dropdown>
                 : ''}

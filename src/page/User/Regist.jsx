@@ -72,13 +72,12 @@ class RegistrationForm extends React.Component {
     checkNow(name, val) {
         this.setState(prevState => ({validateStatus: Object.assign({}, prevState.validateStatus, {[name]: 'validating'})}));
 
-        DB.User.checkuser({[name]:val}).then(data => {
-            if (data.status) {
-                this.setState(prevState => ({validateStatus: Object.assign({}, prevState.validateStatus, {[name]: 'error'})}))
-            } else {
-                this.setState(prevState => ({validateStatus: Object.assign({}, prevState.validateStatus, {[name]: 'success'})}))
-            }
-        })
+        DB.User.checkuser({[name]:val}).then(data => this.setState(prevState => ({validateStatus: Object.assign({},
+            prevState.validateStatus,
+             {[name]: 'success'})})),
+        ()=>this.setState(prevState => ({validateStatus: Object.assign({},
+           prevState.validateStatus,
+            {[name]: 'error'})})))
     }
 
     render() {
@@ -114,7 +113,7 @@ class RegistrationForm extends React.Component {
                             }
                         ]
                     })(
-                        <Input onFocus={() => this.checkClear('username')} onBlur= {e=>{ const val = e.target.value; if(val){ this.checkNow('username',val) } }} prefix={< Icon type = "user" style = {{ fontSize: 13 }}/>} placeholder="用户名"/>
+                        <Input autoComplete={false} onFocus={() => this.checkClear('username')} onBlur= {e=>{ const val = e.target.value; if(val){ this.checkNow('username',val) } }} prefix={< Icon type = "user" style = {{ fontSize: 13 }}/>} placeholder="用户名"/>
                     )}
                 </FormItem>
                 <FormItem hasFeedback label="密码">
@@ -166,7 +165,7 @@ class RegistrationForm extends React.Component {
                                 whitespace: true
                             }
                         ]
-                    })(<Input onFocus={() => this.checkClear('nicheng')} onBlur= {e=>{ const val = e.target.value; if(val){ this.checkNow('nicheng',val) } }} placeholder='昵称'/>)}
+                    })(<Input autoComplete={false} onFocus={() => this.checkClear('nicheng')} onBlur= {e=>{ const val = e.target.value; if(val){ this.checkNow('nicheng',val) } }} placeholder='昵称'/>)}
                 </FormItem>
                 <FormItem>
                     <Button className='login-form-button' type="primary" htmlType="submit" size="large">注册</Button>

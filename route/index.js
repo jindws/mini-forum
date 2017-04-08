@@ -1,11 +1,5 @@
 const Router = require('koa-router')
 
-// function getKey(ctx){
-// 	   const re = eval("/" + "key" + "\=([^;]*)/;");
-//      const cookie = ctx.request.header.cookie;
-//      return  re.exec(cookie)?decodeURI(re.exec(cookie)[1]):''
-// }
-
 const article = require('./routes/article');
 let user = require('./routes/user');
 const pinglun = require('./routes/pinglun');

@@ -31,14 +31,7 @@ class NormalLoginForm extends Component {
               DB.User.login({
                 username: values.username,
                 password: md5(values.password)
-              }).then(re => {
-                    if (!re.status) {
-                        Cookie.setCookie('key', re.data.key, 1);
-                        location.replace('#/user/index');
-                    } else {
-                        Modal.error({title: '温馨提示', content: re.error});
-                    }
-                })
+              }).then(re => location.replace('#/user/index'),re=>Modal.error({title: '温馨提示', content: re.error}))
             }
 
         });
@@ -56,7 +49,7 @@ class NormalLoginForm extends Component {
                             }
                         ]
                     })(
-                        <Input prefix={< Icon type = "user" style = {{ fontSize: 13 }}/>} placeholder="用户名"/>
+                        <Input autoComplete={false} prefix={< Icon type = "user" style = {{ fontSize: 13 }}/>} placeholder="用户名"/>
                     )}
                 </FormItem>
                 <FormItem>

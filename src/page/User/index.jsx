@@ -40,9 +40,9 @@ class Index extends Component {
     componentDidMount() {
         this.props.dispatch(actions.setTitle({title: '个人中心', backBtn: true, right: false}));
         DB.User.message().then(re => {
-            if (!re.status) {
-                this.setState({user: re.data})
-            }
+              this.setState({user: re.data})
+        },()=>{
+          location.hash='';
         })
     }
 

@@ -47,38 +47,36 @@ class View extends Component {
 
     getPinglun(){
       DB.Article.getPinglun({articleId:this.state.articleId}).then(data=>{
-        if(!data.status){
           this.setState({
               PLloading:false,
               pingluns:data.list
           })
-        }else{
-          this.setState({
-              PLloading:false,
-              pingluns:[{
-                message:'暂无评论'
-              }]
-          })
-        }
+      },()=>{
+        this.setState({
+            PLloading:false,
+            pingluns:[{
+              message:'暂无评论'
+            }]
+        })
       })
     }
 
   changeTab(key) {
       if (+ key === 2) {
-          if (!Cookie.getCookie('key')) {
-              this.setState({TooltipVisible: false})
-              Modal.confirm({
-                  title: '温馨提示',
-                  content: '请先登录!',
-                  okText: '现在登录',
-                  cancelText: '取消',
-                  onOk: () => {
-                    location.hash = '#/user/login'
-                  }
-              });
-          } else {
+          DB.User.message().then(()=>{
               this.setState({activityKey: 2})
-          }
+          },()=>{
+            this.setState({TooltipVisible: false})
+            Modal.confirm({
+                title: '温馨提示',
+                content: '请先登录!',
+                okText: '现在登录',
+                cancelText: '取消',
+                onOk: () => {
+                    location.hash = '#/user/login'
+                }
+            });
+          })
       } else {
           this.setState({activityKey: 1})
       }

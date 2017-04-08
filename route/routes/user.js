@@ -10,11 +10,9 @@ const {
     logout
 } = require('../../src/mongo/user');
 
-const getKey = require('./getKey');
-
 user.post('/login', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await login(request).then(data => {
+    await login(request,ctx.session).then(data => {
         ctx.body = {
             status: 0,
             data
@@ -58,7 +56,8 @@ user.post('/regist', async ctx => {
 
 user.post('/message', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await myuser(Object.assign(request,{key:getKey(ctx)})).then(data => {
+    console.log(ctx.session.key)
+    await myuser(Object.assign(request,{key:ctx.session.key})).then(data => {
         ctx.body = {
             status: 0,
             data:Object.assign(data,{_id:null}),
@@ -73,7 +72,7 @@ user.post('/message', async ctx => {
 
 user.post('/changeNicheng', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await changeNicheng(Object.assign(request,{key:getKey(ctx)})).then(data => {
+    await changeNicheng(Object.assign(request,{key:ctx.session.key})).then(data => {
         ctx.body = {
             status: 0,
             result: 'success'
@@ -88,7 +87,8 @@ user.post('/changeNicheng', async ctx => {
 
 user.post('/logout', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await logout(Object.assign(request,{key:getKey(ctx)})).then(data => {
+    await logout(Object.assign(request,{key:ctx.session.key})).then(data => {
+        ctx.session.key = '';
         ctx.body = {
             status: 0,
             result: 'success'
@@ -104,7 +104,7 @@ user.post('/logout', async ctx => {
 user.post('/myArticles', async ctx => {
     const {myArticles} = require('../../src/mongo/user');
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await myArticles(Object.assign({key:getKey(ctx)},request)).then(data => {
+    await myArticles(Object.assign({key:ctx.session.key},request)).then(data => {
         ctx.body = {
             status: 0,
             list: data,

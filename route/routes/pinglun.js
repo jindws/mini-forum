@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const getKey = require('./getKey');
+// const getKey = require('./getKey');
 
 let pinglun = new Router();
 
@@ -7,7 +7,7 @@ const {savePinglun} = require('../../src/mongo/PingLun');
 const {findUserByKey, findUserById} = require('../../src/mongo/user');
 pinglun.post('/add', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await findUserByKey(getKey(ctx)).then(async data => {
+    await findUserByKey(ctx.session.key).then(async data => {
         await savePinglun(Object.assign(request, {userId: data._id})).then(() => {
             ctx.body = {
                 status: 0,

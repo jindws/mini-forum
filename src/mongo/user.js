@@ -39,7 +39,7 @@ const UserModel = db.model("user", UserSchema, "user");
 /**
  * 登录
  */
-function toLogin(request) {
+function toLogin(request,session) {
     return new Promise((resolve, reject) => {
         UserModel.findOne({
             username: request.username,
@@ -50,7 +50,9 @@ function toLogin(request) {
             createDate: 1
         }, async(error, docs) => {
             if (docs) {
+              console.log(1,session.key)
                 const key = md5(`${docs._id}${Date.now()}`);
+                session.key = key;
                 await updateKey(docs._id, key)
                 resolve(Object.assign({}, JSON.parse(JSON.stringify(docs)), {key, _id: null}));
             } else {
@@ -69,7 +71,7 @@ function updateKey(id, key) {
 
 }
 
-exports.login = request => toLogin(request);
+exports.login = (request,session) => toLogin(request,session);
 
 /**
  * 注册
@@ -131,15 +133,18 @@ function findUserByKey(key) {
 exports.findUserByKey = findUserByKey;
 
 exports.myuser = request => {
-    const {findArticleByUserId_Count} =require('./article');
-    return new Promise((resolve,reject)=>[
-        findUserByKey(request.key).then(data=>{
-            findArticleByUserId_Count(data._id).then(articleNum=>{
-              resolve(Object.assign({},JSON.parse(JSON.stringify(data)),{articleNum}))
+    const {findArticleByUserId_Count} = require('./article');
+    return new Promise((resolve, reject) => {
+        if (!request.key) {
+            reject();
+            // return;
+        }
+        findUserByKey(request.key).then(data => {
+            findArticleByUserId_Count(data._id).then(articleNum => {
+                resolve(Object.assign({}, JSON.parse(JSON.stringify(data)), {articleNum}))
             })
         })
-    ])
-
+    })
 }
 
 exports.changeNicheng = request => {
@@ -192,7 +197,7 @@ exports.logout = request => {
         UserModel.findOneAndUpdate({
             key: resolve.key
         }, {
-            key: md5(Date.now())
+            key: ''
         }).then(() => {
             resolve();
         })

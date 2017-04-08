@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 const article = new Router();
-const getKey = require('./getKey');
+// const getKey = require('./getKey');
 
 const {getArticle, saveArticle, allArticle} = require('../../src/mongo/article.js');
 
@@ -21,7 +21,7 @@ article.post('article', async ctx => {
 
 article.post('article/saveArticle', async ctx => {
     const request = JSON.parse(Object.keys(ctx.request.body));
-    await saveArticle(Object.assign(request,{key:getKey(ctx)})).then(() => {
+    await saveArticle(Object.assign(request,{key:ctx.session.key})).then(() => {
         ctx.body = {
             status: 0,
             message: '发帖成功'
