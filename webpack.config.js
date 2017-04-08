@@ -51,8 +51,7 @@ module.exports = {
     plugins: [
         // 开发环境配置
         new webpack.DefinePlugin({
-            __LOCAL__: true, // 测试环境
-            __PRO__: false, // 生产环境
+            Root: 9003, // 测试环境
         }),
         new HtmlWebpackPlugin({template: './index.html'}),
         new webpack.ProvidePlugin({md5:'md5'}),

@@ -31,19 +31,22 @@ export default new class {
 function fetchs(config,path, query, method) {
     let body = Object.assign({}, query);
     return new Promise((resolve, reject) => {
-        fetch(path+config.url, {
+      // console.log(`${location.origin}:9003${path}${config.url}`)
+        // fetch('http://localhost:801/mini_forum/list', {
+        // fetch(`${location.protocol}//${location.hostname}:9003${path}${config.url}`,{
+        fetch(`${location.origin}${location.pathname}${path}${config.url}`,{
             credentials: 'include',
             method: 'POST',
+            // mode: "no-cors",
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/x-www-form-urlencoded",
+                'Access-Control-Allow-Origin': '*',
             },
             body: JSON.stringify(body)
-        }).then(re => re.json().then(data => {
-            // console.log(msg.url)
-            // window.__store__.dispatch(actions.Responce(method, resp));
-            resolve(data)
-        }, data => reject(data)), () => reject());
+        }).then(re => {
+          re.json().then(data =>resolve(data), data => reject(data))
+        }, () => reject());
     })
 }
 

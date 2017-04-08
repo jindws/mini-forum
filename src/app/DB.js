@@ -4,46 +4,46 @@ export default DBF.context;
 
 DBF.create('Index','', {
     getList: {
-        url: '/list'
+        url: 'list'
     }
 });
 
 DBF.create('Article','' ,{
     article: {
-        url: '/article'
+        url: 'article'
     },
     getPinglun: {
-        url: '/pinglun/getpinglun'
+        url: 'pinglun/getpinglun'
     },
     addPingLun:{
-      url:'/pinglun/add'
+      url:'pinglun/add'
     },
     saveArticle:{
-      url:'/article/saveArticle'
+      url:'article/saveArticle'
     }
 });
 
 
-DBF.create('User', '/user',{
+DBF.create('User', 'user/',{
     changeNicheng: {
-        url: '/changeNicheng'
+        url: 'changeNicheng'
     },
     login:{
-      url:'/login'
+      url:'login'
     },
     message:{
-      url:'/message'
+      url:'message'
     },
     myArticles:{
-      url:'/myArticles'
+      url:'myArticles'
     },
     regist:{
-      url:'/regist'
+      url:'regist'
     },
     checkuser:{
-      url:'/checkuser'
+      url:'checkuser'
     },
     logout:{
-      url:'/logout'
+      url:'logout'
     }
 });
