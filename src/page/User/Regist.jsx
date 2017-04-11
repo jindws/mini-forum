@@ -182,6 +182,7 @@ class Regist extends Component {
     constructor(props) {
         super(props);
         this.state = {}
+        this.props.UserMessage.username&&history.go(-1);
     }
     componentDidMount() {
         this.props.dispatch(actions.setTitle({title: '注册', backBtn: true, right: false}));
@@ -191,4 +192,9 @@ class Regist extends Component {
     }
 }
 
-export default connect()(Regist);
+const select = state => {
+    return {UserMessage: state.setUserMessage}
+}
+
+
+export default connect(select)(Regist);

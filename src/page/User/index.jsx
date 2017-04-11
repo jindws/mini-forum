@@ -37,13 +37,17 @@ class Index extends Component {
         })
     }
 
-    componentDidMount() {
-        this.props.dispatch(actions.setTitle({title: '个人中心', backBtn: true, right: false}));
-        DB.User.message().then(re => {
-              this.setState({user: re.data})
-        },()=>{
-          location.hash='';
-        })
+    async componentDidMount() {
+        await this.props.dispatch(actions.setTitle({title: '个人中心', backBtn: true, right: false}));
+    }
+
+    componentWillReceiveProps(nextProps){
+        const msg = nextProps.UserMessage;
+        if(msg.username){
+            this.setState({user: msg})
+        }else{
+            location.hash='';
+        }
     }
 
     render() {
@@ -77,4 +81,8 @@ class Index extends Component {
     }
 }
 
-export default connect()(Index);
+const select = state => {
+    return {UserMessage: state.setUserMessage}
+}
+
+export default connect(select)(Index);

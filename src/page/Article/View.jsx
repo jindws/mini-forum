@@ -61,10 +61,10 @@ class View extends Component {
     }
 
   changeTab(key) {
-      if (+ key === 2) {
-          DB.User.message().then(()=>{
-              this.setState({activityKey: 2})
-          },()=>{
+    if (+ key === 2) {
+        if (this.props.UserMessage.username) {
+            this.setState({activityKey: 2})
+        } else {
             this.setState({TooltipVisible: false})
             Modal.confirm({
                 title: '温馨提示',
@@ -75,10 +75,10 @@ class View extends Component {
                     location.hash = '#/user/login'
                 }
             });
-          })
-      } else {
-          this.setState({activityKey: 1})
-      }
+        }
+    } else {
+        this.setState({activityKey: 1})
+    }
   }
 
     submit() {
@@ -175,4 +175,8 @@ class View extends Component {
     }
 }
 
-export default connect()(View);
+const select = state => {
+    return {UserMessage: state.setUserMessage}
+}
+
+export default connect(select)(View);

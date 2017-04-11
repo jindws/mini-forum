@@ -11,4 +11,14 @@ const setTitle = (state = [], action) => {
     }
 }
 
-exports.todoApp = combineReducers({setTitle})
+const setUserMessage = (state = [], action) => {
+    switch(action.type){
+      case actions.UserMessage:
+      console.log(action)
+        return action.msg.data||{};
+      default:
+        return state;
+    }
+}
+
+exports.todoApp = combineReducers({setTitle,setUserMessage})

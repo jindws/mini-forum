@@ -1,5 +1,18 @@
-export const Title = 'Title'
+const Title = 'Title';
 
-export const setTitle = title =>{
+const setTitle = title =>{
   return {type: Title, title}
 };
+
+const UserMessage = 'UserMessage';
+
+const setUserMessage = msg=>{
+  return{type:UserMessage,msg}
+}
+
+export {
+  Title,
+  setTitle,
+  UserMessage,
+  setUserMessage,
+}

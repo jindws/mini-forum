@@ -14,12 +14,17 @@ import DB from '../../app/DB'
 const FormItem = Form.Item;
 
 class NormalLoginForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             error: ''
         }
-        DB.User.message().then(()=>location.replace('#/user/index'),()=>null)
+
+
+        // this.props.UserMessage.username&&location.replace('#/user/index');
+        // console.log(this.props)
+
+        // DB.User.message().then(()=>location.replace('#/user/index'),()=>null)
     }
     handleSubmit(e) {
         e.preventDefault();
@@ -80,6 +85,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {}
+        this.props.UserMessage.username&&history.go(-1);
     }
     componentDidMount() {
         this.props.dispatch(actions.setTitle({title: '登录', backBtn: true, right: false}));
@@ -89,4 +95,8 @@ class Login extends Component {
     }
 }
 
-export default connect()(Login);
+const select = state => {
+    return {UserMessage: state.setUserMessage}
+}
+
+export default connect(select)(Login);

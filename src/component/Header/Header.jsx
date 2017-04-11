@@ -1,17 +1,16 @@
 import React, {Component} from 'react'
 import {Menu, Dropdown, Icon, Modal} from 'antd';
 const confirm = Modal.confirm;
+import * as actions from '../../app/actions.jsx'
 
 import {connect} from 'react-redux'
 
-// import Cookie from '../Cookie'
 import DB from '../../app/DB'
 
 class Header extends Component {
     constructor() {
         super();
         this.state = {};
-        // this.myMenu();
     }
 
     backBtn() {
@@ -35,7 +34,8 @@ class Header extends Component {
     }
 
     async myMenu() {
-        DB.User.message().then(()=>{
+        DB.User.message().then(data=>{
+          this.props.dispatch(actions.setUserMessage({data:data.data}));
           this.setState({
             menu:<Menu>
                 <Menu.Item key="0">
@@ -52,6 +52,7 @@ class Header extends Component {
             </Menu>
           })
         },()=>{
+          this.props.dispatch(actions.setUserMessage({data:null}));
           this.setState({
             menu:<Menu>
                 <Menu.Item key="0">

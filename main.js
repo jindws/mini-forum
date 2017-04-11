@@ -15,20 +15,7 @@ app.use(cors({
 
 
 const session = require('koa-session-minimal')
-// const redisStore = require('koa-redis')
-app.use(session({
-  // store: redisStore()
-}))
-
-// app.use(async (ctx, next) => {
-//   console.log(ctx.session)
-//   ctx.session.count = ctx.session.count || 0
-//   ctx.session.count++
-//
-//   await next()
-//
-//   ctx.body = ctx.session.count
-// })
+app.use(session())
 
 session({
   cookie: ctx => ({
