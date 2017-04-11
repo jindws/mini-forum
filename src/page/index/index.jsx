@@ -7,6 +7,7 @@ import {Spin, Icon, Pagination} from 'antd'
 import ArticleList from './ArticleList.jsx'
 import '../../app/DB'
 import DB from '../../app/DB'
+
 class Index extends Component {
     constructor(props) {
         super(props);

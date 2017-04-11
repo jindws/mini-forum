@@ -26,6 +26,7 @@
             padding-left: 10px;
             display: block;
             flex: 1;
+            font-size: 12px;
         }
     }
 
@@ -59,6 +60,7 @@
 
             label {
                 padding-left: pxToVw(10);
+                font-size: pxToVw(12);
             }
         }
 

@@ -9,7 +9,7 @@
 - mongoose
 - antd
 - redux
-- postcss
+- sass
 
 
 ###其他技术
@@ -18,7 +18,5 @@
 - forever
 - nginx
 
->建议使用手机模式查看
+>建议使用手机模式
 ##  http://139.224.14.93/mini_forum
-
-(http://139.224.14.93:9003 已反向代理)

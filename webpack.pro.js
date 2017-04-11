@@ -40,7 +40,10 @@ module.exports = {
             }, {
                 test: /\.less$/,
                 loader: "style-loader!css-loader!postcss-loader!less-loader"
-            }
+            },  {
+                  test: /\.scss$/,
+                  loader: "style-loader!css-loader!postcss-loader!sass-loader"
+              }
         ]
     },
 
@@ -62,8 +65,11 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
             compress: {
-                warnings: false
-            }
+                warnings: false,
+                drop_console: true
+            },
+            beautify:false,
+            comments:false
         }),
         new HtmlWebpackPlugin({template: './index.html'}),
         new webpack.ProvidePlugin({md5:'md5'}),

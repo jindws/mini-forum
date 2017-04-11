@@ -19,6 +19,7 @@
 
         label {
             flex: 1;
+            font-size: 13px;
         }
 
         label:last-child {
@@ -28,6 +29,7 @@
 
     textarea {
         resize: none;
+        font-size: 12px;
     }
 
     [disabled] {
@@ -103,10 +105,18 @@
         p {
             padding: pxToVw(10);
             font-size: pxToVw(13);
+
+            label {
+                font-size: pxToVw(13);
+            }
         }
 
         .ant-tabs-nav {
             margin-top: pxToVw(50);
+        }
+
+        textarea {
+            font-size: pxToVw(12);
         }
 
         dl {
