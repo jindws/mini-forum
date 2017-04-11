@@ -1,4 +1,4 @@
 import Article from './Article.jsx'
-import './article.css'
+import './article.scss'
 
 export default Article;

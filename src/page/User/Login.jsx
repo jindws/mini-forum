@@ -9,7 +9,6 @@ import {
     Checkbox,
     Modal
 } from 'antd';
-import Cookie from '../../component/Cookie'
 import DB from '../../app/DB'
 
 const FormItem = Form.Item;
@@ -20,9 +19,7 @@ class NormalLoginForm extends Component {
         this.state = {
             error: ''
         }
-        if(Cookie.getCookie('key')){
-            location.replace('#/user/index');
-        }
+        DB.User.message().then(()=>location.replace('#/user/index'),()=>null)
     }
     handleSubmit(e) {
         e.preventDefault();

@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
 import {Spin, Icon, Pagination} from 'antd'
 import ArticleList from './ArticleList.jsx'
-import './index.css'
 import '../../app/DB'
 import DB from '../../app/DB'
 class Index extends Component {

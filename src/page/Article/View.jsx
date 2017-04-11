@@ -3,7 +3,6 @@ import {Spin, Modal, Input, Tabs, Button,Tooltip} from 'antd';
 import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
 const TabPane = Tabs.TabPane;
-import Cookie from '../../component/Cookie'
 import DB from '../../app/DB'
 
 class View extends Component {
