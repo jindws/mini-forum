@@ -1,3 +1,5 @@
+@import '../../app/default.scss';
+
 .login-form-button {
     width: 100%;
 }
@@ -12,23 +14,27 @@
     background-color: #fff;
     padding: 10px;
     font-size: 15px;
+
     dl {
         dt {
             display: flex;
             align-items: center;
             padding-bottom: 5px;
         }
+
         label {
             padding-left: 10px;
             display: block;
             flex: 1;
         }
     }
+
     .myarticle {
         height: 40px;
         display: flex;
         align-items: center;
         background-color: rgba(221, 221, 221, 0.38);
+
         label {
             text-align: right;
             padding-right: 10px;
@@ -36,8 +42,33 @@
         }
     }
 }
+@supports(font-size:1vw) {
+    #login {
+        padding: pxToVw(10);
+    }
 
+    #user_index {
+        top: pxToVw(10);
+        padding: pxToVw(10);
+        font-size: pxToVw(15);
 
-/*.ant-btn-lg {
-    width: 100%;
-}*/
+        dl {
+            dt {
+                padding-bottom: pxToVw(5);
+            }
+
+            label {
+                padding-left: pxToVw(10);
+            }
+        }
+
+        .myarticle {
+            height: pxToVw(40);
+
+            label {
+                padding-right: pxToVw(10);
+                font-size: pxToVw(15);
+            }
+        }
+    }
+}

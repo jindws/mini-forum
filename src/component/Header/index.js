@@ -1,4 +1,4 @@
 import Header from './Header.jsx'
-import './header.css'
+import './header.scss'
 
 export default Header;

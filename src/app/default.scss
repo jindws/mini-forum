@@ -1,4 +1,5 @@
-$bg:#f6f6f6;
+$bg: #f6f6f6;
+
 body {
     background-color: $bg;
     margin: 0;
@@ -7,11 +8,20 @@ body {
 dl {
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
+
     dd {
         -webkit-margin-start: 0;
     }
 }
+@function pxToVw($px) {
+     @return $px * 100vw / 750 *2;
+}
 
 #body {
     margin-top: 44px;
+}
+@supports(font-size:1vw) {
+    #body {
+        margin-top: pxToVw(44);
+    }
 }

@@ -14,7 +14,7 @@ import {createStore} from 'redux'
 import {todoApp} from './reducers.jsx'
 let stores = createStore(todoApp);
 window.__store__ = stores;
-import './default.css'
+import './default.scss'
 
 class App extends Component {
     constructor() {

@@ -1,14 +1,17 @@
+@import '../../app/default.scss';
+
 #list {
-    /*color: blue;*/
     dl {
         display: flex;
         flex-direction: column;
+
         dd {
             margin-top: 10px;
             padding: 10px;
             width: 100%;
             background-color: #fff;
             color: #999;
+
             p {
                 font-size: 18px;
                 line-height: 1.2;
@@ -20,14 +23,17 @@
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
             }
+
             div {
                 display: flex;
                 align-items: center;
                 padding-top: 15px;
+
                 label {
                     flex: 1;
                     padding-left: 10px;
                 }
+
                 i {
                     padding-left: 10px;
                     padding-right: 5px;
@@ -35,6 +41,7 @@
             }
         }
     }
+
     ul {
         display: flex;
         justify-content: center;
@@ -45,4 +52,35 @@
 .spin {
     text-align: center;
     margin-top: 50%;
+}
+@supports(font-size:1vw) {
+    #list {
+        dl {
+            dd {
+                margin-top: pxToVw(10);
+                padding: pxToVw(10);
+
+                p {
+                    font-size: pxToVw(18);
+                }
+
+                div {
+                    padding-top: pxToVw(15);
+
+                    label {
+                        padding-left: pxToVw(10);
+                    }
+
+                    i {
+                        padding-left: pxToVw(10);
+                        padding-right: pxToVw(5);
+                    }
+                }
+            }
+        }
+
+        ul {
+            margin: pxToVw(20);
+        }
+    }
 }

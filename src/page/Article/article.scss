@@ -1,58 +1,74 @@
+@import '../../app/default.scss';
+
 #article {
     background-color: #fff;
     position: relative;
     top: 10px;
+
     h1 {
         padding: 10px;
         word-break: break-all;
         border-bottom: 1px solid #f6f6f6;
     }
+
     p {
         display: flex;
         padding: 10px;
         background-color: #f6f6f6;
+        font-size: 13px;
+
         label {
             flex: 1;
         }
+
         label:last-child {
             text-align: right;
         }
     }
+
     textarea {
         resize: none;
     }
+
     [disabled] {
         background-color: transparent;
         color: #000;
         border: 0;
     }
+
     .ant-tabs-nav {
         display: flex;
         width: 100%;
         border-top: 1px solid #ccc;
         margin-top: 50px;
+
         .ant-tabs-tab {
             flex: 1;
             margin-right: 0;
             text-align: center;
         }
     }
+
     dl {
         dd {
             padding: 10px;
+
             label {
                 font-size: 12px;
                 padding-left: 8px;
                 color: #899084;
             }
+
             span {
                 float: right;
             }
         }
-        >:nth-child(odd) {
+
+        > :nth-child(odd) {
             background-color: #eee;
         }
     }
+
     button {
         float: right;
         margin: 10px;
@@ -63,14 +79,64 @@
     display: flex;
     flex-direction: column;
     margin: 15px;
+
     #title {
         height: 30px;
         font-size: 15px;
         margin: 15px 0;
         text-indent: 10px;
     }
+
     #message {
         resize: none;
         margin-bottom: 30px;
+    }
+}
+@supports(font-size:1vw) {
+    #article {
+        top: pxToVw(10);
+
+        h1 {
+            padding: pxToVw(10);
+        }
+
+        p {
+            padding: pxToVw(10);
+            font-size: pxToVw(13);
+        }
+
+        .ant-tabs-nav {
+            margin-top: pxToVw(50);
+        }
+
+        dl {
+            dd {
+                padding: pxToVw(10);
+
+                label {
+                    font-size: pxToVw(12);
+                    padding-left: pxToVw(8);
+                }
+            }
+        }
+
+        button {
+            margin: pxToVw(10);
+        }
+    }
+
+    #write {
+        margin: pxToVw(15);
+
+        #title {
+            height: pxToVw(30);
+            font-size: pxToVw(15);
+            margin: pxToVw(15) 0;
+            text-indent: pxToVw(10);
+        }
+
+        #message {
+            margin-bottom: pxToVw(30);
+        }
     }
 }

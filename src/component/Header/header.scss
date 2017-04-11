@@ -1,3 +1,5 @@
+@import '../../app/default.scss';
+
 header {
     display: flex;
     align-items: center;
@@ -10,15 +12,18 @@ header {
     line-height: 2;
     z-index: 999;
     border-bottom: 1px solid #ccc;
+
     i {
         position: absolute;
         left: 10px;
         top: 10px;
+
         &.anticon-menu-fold {
             left: auto;
             right: 10px;
         }
     }
+
     span {
         white-space: nowrap;
         flex: 0 0 80%;
@@ -26,5 +31,19 @@ header {
         overflow: hidden;
         text-align: center;
         text-overflow: ellipsis;
+    }
+}
+@supports(font-size:1vw) {
+    header {
+        font-size: pxToVw(22);
+
+        i {
+            left: pxToVw(10);
+            top: pxToVw(10);
+
+            &.anticon-menu-fold {
+                right: pxToVw(10);
+            }
+        }
     }
 }
