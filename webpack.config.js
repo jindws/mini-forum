@@ -54,9 +54,9 @@ module.exports = {
     target: 'web',
     plugins: [
         // 开发环境配置
-        new webpack.DefinePlugin({
-            Root: 9003, // 测试环境
-        }),
+        // new webpack.DefinePlugin({
+        //     Root: 9003,
+        // }),
         new HtmlWebpackPlugin({template: './index.html'}),
         new webpack.ProvidePlugin({md5:'md5'}),
         new webpack.optimize.CommonsChunkPlugin({names: ['common'], minChunks: Infinity}),

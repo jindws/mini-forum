@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const {db} = require('./connect')
 
 const md5 = require('md5');
+const uuid = require('uuid/v4');
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -50,8 +51,9 @@ function toLogin(request,session) {
             createDate: 1
         }, async(error, docs) => {
             if (docs) {
-              console.log(1,session.key)
-                const key = md5(`${docs._id}${Date.now()}`);
+                // const key = md5(`${docs._id}${Date.now()}`);
+                const key = uuid();
+
                 session.key = key;
                 await updateKey(docs._id, key)
                 resolve(Object.assign({}, JSON.parse(JSON.stringify(docs)), {key, _id: null}));
