@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import * as actions from '../../app/actions.jsx'
 const TabPane = Tabs.TabPane;
 import DB from '../../app/DB'
+import Remarkable from 'remarkable'
 
 class View extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class View extends Component {
             TooltipVisible:false,
             articleId:this.props.match.params.id
         }
+        this.getRawMarkup = this.getRawMarkup.bind(this);
     }
 
     componentDidMount() {
@@ -128,6 +130,14 @@ class View extends Component {
         })
     }
 
+    getRawMarkup(){
+      const md = new Remarkable();
+      md.set({
+          html: true,
+          breaks: true
+      });
+      return { __html: md.render(this.state.data.article) };
+    }
     render() {
         const data = this.state.data;
         if (!data){
@@ -136,12 +146,16 @@ class View extends Component {
         return <section id='article'>
               <div id='top'>
                   <h1>{data.title}</h1>
-                  <p><Tooltip onClick={()=>{
+                  <p className='p'><Tooltip onClick={()=>{
                       data.userId?location.hash=`#/user/list/${data.userId}`:''
                     }} title="点击查看该作者更多文章" placement='right' visible={this.state.TooltipVisible}>作者:{data.user}</Tooltip>
                   <label>{(new Date(data.createTime)).toLocaleString()}</label></p>
               </div>
-              <Input id='main' value={data.article} type="textarea" autosize disabled/>
+              {/*<Input id='main' value={data.article} type="textarea" autosize disabled/>*/}
+                <div
+                  className="content"
+                  dangerouslySetInnerHTML={this.getRawMarkup()}
+                />
 
               <Tabs id='pinglun' activeKey={`${this.state.activityKey}`} onChange={this.changeTab.bind(this)}>
                   <TabPane tab="最新评论" key="1">
